@@ -13,7 +13,6 @@ function UserAuth({ children }) {
   const navigate = useNavigate();
 
   const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-  console.log("API KEY :", apiKey);
   const url = new URL("", apiKey);
 
   // Function to register a new user using local strategy
