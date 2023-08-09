@@ -25,6 +25,7 @@ function UserAuth({ children }) {
         withCredentials: true,
       });
       toast.success(data.msg);
+      navigate("/login");
     } catch (error) {
       toast.success(error.response.data.error);
     }
