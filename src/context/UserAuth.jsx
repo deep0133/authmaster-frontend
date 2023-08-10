@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function UserAuth({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [profileLoading, setProfileLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -18,28 +18,39 @@ function UserAuth({ children }) {
   // Function to register a new user using local strategy
   const registerLocal = async (userData) => {
     try {
+      setBtnLoading(true);
       const { data } = await axios.post(url + "auth/register", userData, {
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        mode: "cors",
+        credentials: "include",
         withCredentials: true,
       });
+      setBtnLoading(false);
       toast.success(data.msg);
       navigate("/login");
     } catch (error) {
-      toast.success(error.response.data.error);
+      toast.success(error.response.data.errors);
     }
+    setBtnLoading(false);
   };
 
   // Function to register a new user using local strategy
   const loginLocal = async (userData) => {
     try {
+      setBtnLoading(true);
       const { data } = await axios.post(url + "auth/login", userData, {
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        mode: "cors",
+        credentials: "include",
         withCredentials: true,
       });
+      setBtnLoading(false);
       setUser(data.user);
       toast.success(data.msg);
     } catch (error) {
@@ -49,6 +60,7 @@ function UserAuth({ children }) {
           : error.response.data
       );
     }
+    setBtnLoading(false);
   };
 
   // Function to authenticate with GitHub strategy
@@ -74,13 +86,18 @@ function UserAuth({ children }) {
   // Function to get the user's profile
   const getProfile = async () => {
     try {
+      setBtnLoading(true);
       setIsLoading(true);
       const { data } = await axios.get(url + "profile", {
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
+        mode: "cors",
+        credentials: "include",
         withCredentials: true,
       });
+      setBtnLoading(false);
       setIsLoading(false);
       setUser(data.user);
       toast.success(data.msg);
@@ -88,17 +105,20 @@ function UserAuth({ children }) {
       setIsLoading(false);
       navigate("/login");
     }
+    setBtnLoading(false);
     setIsLoading(false);
   };
 
   // Function to update the user's profile
   const updateProfile = async (updatedData) => {
     try {
-      setProfileLoading(true);
+      setBtnLoading(true);
       const response = await axios.patch(url + "profile", updatedData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        mode: "cors",
+        credentials: "include",
         withCredentials: true,
       });
       setUser(response.data.user);
@@ -106,7 +126,7 @@ function UserAuth({ children }) {
     } catch (error) {
       toast(error.response.data.error);
     }
-    setProfileLoading(false);
+    setBtnLoading(false);
   };
 
   // Function to update the user's profile
@@ -127,7 +147,7 @@ function UserAuth({ children }) {
     <UserContext.Provider
       value={{
         isLoading,
-        profileLoading,
+        btnLoading,
         user,
         registerLocal,
         loginLocal,

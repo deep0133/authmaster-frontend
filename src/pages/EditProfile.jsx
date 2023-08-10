@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import UserContext from "../context/UserContext";
 import dummyPhoto from "../assets/icons/dummyPhoto.png";
 function EditProfile() {
-  const { user, updateProfile, profileLoading } = useContext(UserContext);
+  const { user, updateProfile, btnLoading } = useContext(UserContext);
 
   const [showFile, setShowFile] = useState(
     user?.photo?.secure_url || dummyPhoto
@@ -242,7 +242,7 @@ function EditProfile() {
         <div className='btn'>
           <button
             type='button'
-            disabled={profileLoading}
+            disabled={btnLoading}
             onClick={(e) => {
               updateHandler(e);
             }}
@@ -251,7 +251,7 @@ function EditProfile() {
               aria-hidden='true'
               role='status'
               className={`inline w-4 h-4 mr-3 text-white animate-spin ${
-                profileLoading ? " " : "hidden"
+                btnLoading ? " " : "hidden"
               }`}
               viewBox='0 0 100 101'
               fill='none'
@@ -265,7 +265,7 @@ function EditProfile() {
                 fill='currentColor'
               />
             </svg>
-            {profileLoading ? "Loading..." : "Save"}
+            {btnLoading ? "Loading..." : "Save"}
           </button>
         </div>
       </div>
