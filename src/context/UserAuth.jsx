@@ -12,22 +12,27 @@ function UserAuth({ children }) {
 
   const navigate = useNavigate();
 
-  const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-  const url = new URL("", apiKey);
+  const url = import.meta.env.VITE_REACT_APP_API_KEY;
+  // const url = new URL("", apiKey);
 
   // Function to register a new user using local strategy
   const registerLocal = async (userData) => {
     try {
       setBtnLoading(true);
-      const { data } = await axios.post(url + "auth/register", userData, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        credentials: "include",
-        withCredentials: true,
-      });
+      const { data, headers } = await axios.post(
+        url + "/auth/register",
+        userData,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+          credentials: "include",
+          withCredentials: true,
+        }
+      );
+      console.log("header : ", headers["set-cookie"]);
       setBtnLoading(false);
       toast.success(data.msg);
       navigate("/login");
@@ -41,7 +46,7 @@ function UserAuth({ children }) {
   const loginLocal = async (userData) => {
     try {
       setBtnLoading(true);
-      const { data } = await axios.post(url + "auth/login", userData, {
+      const response = await axios.post(url + "/auth/login", userData, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -50,6 +55,10 @@ function UserAuth({ children }) {
         credentials: "include",
         withCredentials: true,
       });
+
+      const { data, headers } = response;
+      console.log("Response object:", response);
+      console.log("Set-Cookie header:", headers["set-cookie"]);
       setBtnLoading(false);
       setUser(data.user);
       toast.success(data.msg);
@@ -65,22 +74,22 @@ function UserAuth({ children }) {
 
   // Function to authenticate with GitHub strategy
   const authenticateGitHub = async () => {
-    window.open(url + "auth/github", "_self");
+    window.open(url + "/auth/github", "_self");
   };
 
   // Function to authenticate with GitHub strategy
   const authenticateTwitter = async () => {
-    window.open(url + "auth/twitter", "_self");
+    window.open(url + "/auth/twitter", "_self");
   };
 
   // Function to authenticate with Facebook strategy
   const authenticateFacebook = async () => {
-    window.open(url + "auth/facebook", "_self");
+    window.open(url + "/auth/facebook", "_self");
   };
 
   // Function to authenticate with Google strategy
   const authenticateGoogle = async () => {
-    window.open(url + "auth/google", "_self");
+    window.open(url + "/auth/google", "_self");
   };
 
   // Function to get the user's profile
@@ -88,7 +97,7 @@ function UserAuth({ children }) {
     try {
       setBtnLoading(true);
       setIsLoading(true);
-      const { data } = await axios.get(url + "profile", {
+      const { data } = await axios.get(url + "/profile", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -113,7 +122,7 @@ function UserAuth({ children }) {
   const updateProfile = async (updatedData) => {
     try {
       setBtnLoading(true);
-      const response = await axios.patch(url + "profile", updatedData, {
+      const response = await axios.patch(url + "/profile", updatedData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -132,7 +141,7 @@ function UserAuth({ children }) {
   // Function to update the user's profile
   const logout = async () => {
     try {
-      const { data } = await axios.get(url + "auth/logout", {
+      const { data } = await axios.get(url + "/auth/logout", {
         withCredentials: true,
       });
       setUser(null);
