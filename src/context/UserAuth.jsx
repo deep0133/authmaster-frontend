@@ -26,6 +26,7 @@ function UserAuth({ children }) {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": true,
           },
           mode: "cors",
           credentials: "include",
@@ -50,6 +51,7 @@ function UserAuth({ children }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": true,
         },
         mode: "cors",
         credentials: "include",
