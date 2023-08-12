@@ -52,15 +52,14 @@ function UserAuth({ children }) {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": true,
+          crossDomain: true,
         },
         mode: "cors",
         credentials: "include",
         withCredentials: true,
       });
 
-      const { data, headers } = response;
-      console.log("Response object:", response);
-      console.log("Set-Cookie header:", headers["set-cookie"]);
+      const { data } = response;
       setBtnLoading(false);
       setUser(data.user);
       toast.success(data.msg);
