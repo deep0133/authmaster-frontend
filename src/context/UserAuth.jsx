@@ -19,23 +19,18 @@ function UserAuth({ children }) {
   const registerLocal = async (userData) => {
     try {
       setBtnLoading(true);
-      const { data, headers } = await axios.post(
-        url + "/auth/register",
-        userData,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": true,
-          },
-          mode: "cors",
-          credentials: "include",
-          withCredentials: true,
-        }
-      );
-      console.log("header : ", headers["set-cookie"]);
+      const { data } = await axios.post(url + "/auth/register", userData, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        credentials: "include",
+        withCredentials: true,
+      });
       setBtnLoading(false);
       toast.success(data.msg);
+      toast.success("Please Login First");
       navigate("/login");
     } catch (error) {
       toast.success(error.response.data.errors);
@@ -47,14 +42,16 @@ function UserAuth({ children }) {
   const loginLocal = async (userData) => {
     try {
       setBtnLoading(true);
-      const response = await axios.post(url + "/auth/login", userData, {
+      const { data } = await axios.post(url + "/auth/login", userData, {
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
+        mode: "cors",
         credentials: "include",
+        withCredentials: true,
       });
 
-      const { data } = response;
       setBtnLoading(false);
       setUser(data.user);
       toast.success(data.msg);
