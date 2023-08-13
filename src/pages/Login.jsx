@@ -36,7 +36,6 @@ function Login({ toggleDarkMode, logo, modeLogo }) {
     <div className='flex flex-col justify-center items-center h-[100lvh] bg-light-light-bg dark:bg-dark-dark-bg'>
       <div className='min-[500px]:w-[29rem] w-full px-3 overflow-auto'>
         <div className=' tracking-[-0.0393rem] p-5 min-[500px]:p-8 sm:p-12 space-y-6 border border-border-color rounded-3xl shadow '>
-          {" "}
           <div className='flex justify-between'>
             <img src={logo} alt='' />
             <img

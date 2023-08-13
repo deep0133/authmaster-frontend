@@ -43,20 +43,15 @@ function UserAuth({ children }) {
     setBtnLoading(false);
   };
 
-  // Function to register a new user using local strategy
+  // Function to login a user using local strategy
   const loginLocal = async (userData) => {
     try {
       setBtnLoading(true);
       const response = await axios.post(url + "/auth/login", userData, {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": true,
-          crossDomain: true,
         },
-        mode: "cors",
         credentials: "include",
-        withCredentials: true,
       });
 
       const { data } = response;
