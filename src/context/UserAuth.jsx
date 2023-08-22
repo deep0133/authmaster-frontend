@@ -90,8 +90,6 @@ function UserAuth({ children }) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        mode: "cors",
-        credentials: "include",
         withCredentials: true,
       });
       setBtnLoading(false);
@@ -114,8 +112,6 @@ function UserAuth({ children }) {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        mode: "cors",
-        credentials: "include",
         withCredentials: true,
       });
       setUser(response.data.user);
