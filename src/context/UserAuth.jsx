@@ -13,7 +13,6 @@ function UserAuth({ children }) {
   const navigate = useNavigate();
 
   const url = import.meta.env.VITE_REACT_APP_API_KEY;
-  // const url = new URL("", apiKey);
 
   // Function to register a new user using local strategy
   const registerLocal = async (userData) => {
@@ -24,8 +23,6 @@ function UserAuth({ children }) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        mode: "cors",
-        credentials: "include",
         withCredentials: true,
       });
       setBtnLoading(false);
@@ -47,8 +44,6 @@ function UserAuth({ children }) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        mode: "cors",
-        credentials: "include",
         withCredentials: true,
       });
 
